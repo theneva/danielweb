@@ -1,7 +1,6 @@
 package com.wact.daniel.people;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +33,6 @@ public class PeopleController
     {
         return peopleRepository.findPersonByName(name)
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(null));
+                .orElseThrow(() -> new PersonNotFoundException("No person found with name: '" + name + "'"));
     }
 }
